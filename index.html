@@ -4,780 +4,1061 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CineVortix - Filmes</title>
+<title>NOX47 STREET — Streetwear</title>
 
+    
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-    background:#08090d;
+    font-family:'Inter',sans-serif;
+    background:#080808;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+    /* PROMOÇÃO */
+
+.promo-banner{
+    position:fixed;
+    top:80px;
+    left:50%;
+    transform:translateX(-50%);
+    width:calc(100% - 30px);
+    max-width:700px;
+    background:linear-gradient(135deg,#ff174f,#a9002e);
     color:white;
+    padding:14px 18px;
+    border-radius:14px;
+    z-index:1500;
+    display:none;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    box-shadow:0 15px 40px rgba(255,0,60,.25);
+    animation:promoEntrada .5s ease;
+}
+
+.promo-banner strong{
+    display:block;
+    font-size:14px;
+    font-weight:900;
+}
+
+.promo-banner span{
+    display:block;
+    margin-top:3px;
+    font-size:12px;
+    opacity:.9;
+}
+
+.promo-banner button{
+    border:0;
+    background:rgba(0,0,0,.2);
+    color:white;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    font-size:20px;
+    cursor:pointer;
+}
+
+@keyframes promoEntrada{
+
+    from{
+        opacity:0;
+        transform:translate(-50%,-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translate(-50%,0);
+    }
+
+}
+    
+/* FUNDO */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 20% 10%,rgba(255,255,255,.06),transparent 25%),
+        radial-gradient(circle at 90% 80%,rgba(255,0,70,.06),transparent 25%);
+    pointer-events:none;
+    z-index:-1;
 }
 
 /* HEADER */
+
 header{
-    position:sticky;
+    position:fixed;
     top:0;
-    z-index:100;
-    background:rgba(8,9,13,.95);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid #1d1f27;
+    width:100%;
+    z-index:1000;
+    background:rgba(8,8,8,.75);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .nav{
     max-width:1200px;
     margin:auto;
-    padding:18px 20px;
+    height:70px;
+    padding:0 20px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
 }
 
 .logo{
-    font-size:25px;
-    font-weight:bold;
-    color:#ff3158;
+    font-size:21px;
+    font-weight:900;
+    letter-spacing:-1px;
 }
 
 .logo span{
-    color:white;
+    color:#ff174f;
 }
 
-.search{
-    width:300px;
-    background:#15171e;
-    border:1px solid #272a34;
-    border-radius:10px;
-    padding:11px 15px;
+.nav a{
     color:white;
-    outline:none;
-}
-
-.search:focus{
-    border-color:#ff3158;
+    text-decoration:none;
+    margin-left:25px;
+    font-size:13px;
+    font-weight:600;
 }
 
 /* HERO */
+
 .hero{
-    max-width:1200px;
-    margin:25px auto;
-    padding:50px 30px;
-    border-radius:20px;
-    background:
-    linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.3)),
-    url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1400&q=80")
-    center/cover;
-}
-
-.hero h1{
-    font-size:45px;
-    max-width:600px;
-    margin-bottom:15px;
-}
-
-.hero p{
-    color:#ccc;
-    max-width:550px;
-    line-height:1.6;
-}
-
-.hero button{
-    margin-top:22px;
-    padding:13px 22px;
-    border:0;
-    border-radius:8px;
-    background:#ff3158;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-/* FILTROS */
-.filters{
-    max-width:1200px;
-    margin:30px auto;
-    padding:0 20px;
+    min-height:100vh;
     display:flex;
-    gap:10px;
-    overflow-x:auto;
-}
-
-.filter{
-    padding:9px 16px;
-    border:1px solid #292c35;
-    background:#15171e;
-    color:white;
-    border-radius:20px;
-    cursor:pointer;
-    white-space:nowrap;
-}
-
-.filter.active,
-.filter:hover{
-    background:#ff3158;
-    border-color:#ff3158;
-}
-
-/* CATALOGO */
-.container{
-    max-width:1200px;
-    margin:auto;
-    padding:0 20px 50px;
-}
-
-.title{
-    font-size:25px;
-    margin-bottom:20px;
-}
-
-.movies{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:18px;
-}
-
-.card{
-    background:#111319;
-    border:1px solid #20232c;
-    border-radius:12px;
-    overflow:hidden;
-    transition:.25s;
-}
-
-.card:hover{
-    transform:translateY(-5px);
-    border-color:#ff3158;
-}
-
-.poster{
-    height:290px;
-    width:100%;
-    object-fit:cover;
-}
-
-.info{
-    padding:13px;
-}
-
-.info h3{
-    font-size:16px;
-    margin-bottom:7px;
-}
-
-.info p{
-    color:#888;
-    font-size:13px;
-}
-
-.actions{
-    display:flex;
-    gap:8px;
-    margin-top:12px;
-}
-
-.watch{
-    flex:1;
-    border:0;
-    background:#ff3158;
-    color:white;
-    padding:9px;
-    border-radius:7px;
-    cursor:pointer;
-}
-
-.favorite{
-    width:40px;
-    border:1px solid #333;
-    background:#191b22;
-    color:white;
-    border-radius:7px;
-    cursor:pointer;
-}
-
-.favorite.active{
-    color:#ff3158;
-}
-
-/* MODAL */
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:1000;
-    background:rgba(0,0,0,.92);
     align-items:center;
     justify-content:center;
-    padding:20px;
-}
-
-.modal-content{
-    width:100%;
-    max-width:1000px;
-    background:#0e1015;
-    border:1px solid #272a32;
-    border-radius:15px;
-    overflow:hidden;
+    text-align:center;
+    padding:100px 20px 50px;
     position:relative;
 }
 
+.hero-content{
+    max-width:850px;
+}
+
+.tag{
+    display:inline-block;
+    border:1px solid rgba(255,255,255,.15);
+    padding:8px 14px;
+    border-radius:100px;
+    font-size:11px;
+    color:#bbb;
+    margin-bottom:25px;
+    letter-spacing:2px;
+}
+
+/* TEXTO 3D */
+
+.hero h1{
+    font-size:clamp(55px,12vw,150px);
+    line-height:.85;
+    font-weight:900;
+    letter-spacing:-8px;
+    transform-style:preserve-3d;
+    transition:transform .15s ease-out;
+    text-shadow:
+        1px 1px 0 #333,
+        3px 3px 0 #222,
+        5px 5px 0 #151515,
+        10px 10px 25px rgba(0,0,0,.8);
+}
+
+.hero h1 span{
+    color:#ff174f;
+}
+
+.hero p{
+    margin:30px auto;
+    max-width:600px;
+    color:#aaa;
+    font-size:16px;
+    line-height:1.7;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    padding:15px 25px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:800;
+    text-decoration:none;
+    transition:.2s;
+}
+
+.btn-primary{
+    background:#ff174f;
+    color:white;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(255,23,79,.25);
+}
+
+.btn-secondary{
+    border:1px solid #333;
+    color:white;
+    background:#111;
+}
+
+/* PRODUTOS */
+
+section{
+    max-width:1200px;
+    margin:auto;
+    padding:90px 20px;
+}
+
+.section-title{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    margin-bottom:35px;
+}
+
+.section-title h2{
+    font-size:38px;
+    letter-spacing:-2px;
+}
+
+.section-title p{
+    color:#777;
+    font-size:13px;
+}
+
+/* GRID */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.product{
+    background:#101010;
+    border:1px solid #1c1c1c;
+    border-radius:18px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.product:hover{
+    transform:translateY(-7px);
+    border-color:#333;
+}
+
+.product-image{
+    height:390px;
+    overflow:hidden;
+    background:#161616;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.product:hover img{
+    transform:scale(1.05);
+}
+
+.product-info{
+    padding:20px;
+}
+
+.product-info h3{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.product-info p{
+    color:#777;
+    font-size:12px;
+    margin-bottom:15px;
+}
+
+.price{
+    font-size:22px;
+    font-weight:900;
+    margin-bottom:15px;
+}
+
+.buy{
+    width:100%;
+    border:none;
+    padding:13px;
+    background:#fff;
+    color:#000;
+    border-radius:9px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.buy:hover{
+    background:#ff174f;
+    color:white;
+}
+
+/* SOBRE */
+
+.about{
+    background:#0e0e0e;
+    border-top:1px solid #181818;
+    border-bottom:1px solid #181818;
+}
+
+.about-content{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+}
+
+.about h2{
+    font-size:45px;
+    line-height:1;
+    letter-spacing:-3px;
+}
+
+.about h2 span{
+    color:#ff174f;
+}
+
+.about p{
+    color:#999;
+    line-height:1.8;
+    margin-top:20px;
+}
+
+.info-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.info{
+    padding:25px;
+    border:1px solid #222;
+    border-radius:15px;
+    background:#111;
+}
+
+.info strong{
+    display:block;
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.info small{
+    color:#777;
+}
+
+/* PEDIDO */
+
+.order{
+    text-align:center;
+}
+
+.order h2{
+    font-size:45px;
+    letter-spacing:-2px;
+}
+
+.order p{
+    color:#777;
+    margin:15px 0 30px;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid #1b1b1b;
+    padding:35px 20px;
+    text-align:center;
+    color:#555;
+    font-size:12px;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:2000;
+    padding:20px;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:430px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:20px;
+    padding:25px;
+}
+
+.modal-box h2{
+    margin-bottom:5px;
+}
+
+.modal-box .subtitle{
+    color:#777;
+    font-size:12px;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    color:#aaa;
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border-radius:9px;
+    border:1px solid #292929;
+    background:#080808;
+    color:white;
+    outline:none;
+    margin-bottom:17px;
+}
+
+input:focus{
+    border-color:#ff174f;
+}
+
 .close{
-    position:absolute;
-    right:15px;
-    top:12px;
-    z-index:5;
-    width:40px;
-    height:40px;
-    border:0;
-    border-radius:50%;
-    background:rgba(0,0,0,.7);
+    float:right;
+    border:none;
+    background:none;
     color:white;
     font-size:22px;
     cursor:pointer;
 }
 
-.video-container{
-    width:100%;
-    aspect-ratio:16/9;
-    background:#000;
-}
-
-video{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
-
-.modal-info{
-    padding:20px;
-}
-
-.modal-info h2{
-    margin-bottom:8px;
-}
-
-.modal-info p{
-    color:#aaa;
-}
-
-/* VAZIO */
-.empty{
-    display:none;
-    text-align:center;
-    color:#777;
-    padding:50px;
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    color:#666;
-    padding:30px;
-    border-top:1px solid #1b1d24;
-}
-
 /* RESPONSIVO */
-@media(max-width:1000px){
-    .movies{
-        grid-template-columns:repeat(4,1fr);
+
+@media(max-width:800px){
+
+    .products{
+        grid-template-columns:1fr 1fr;
     }
+
+    .product-image{
+        height:300px;
+    }
+
+    .about-content{
+        grid-template-columns:1fr;
+    }
+
 }
 
-@media(max-width:750px){
-    .nav{
-        flex-direction:column;
-        align-items:stretch;
-    }
+@media(max-width:550px){
 
-    .search{
-        width:100%;
-    }
-
-    .hero{
-        margin:15px;
-        padding:35px 20px;
+    .nav a{
+        display:none;
     }
 
     .hero h1{
-        font-size:32px;
+        letter-spacing:-5px;
     }
 
-    .movies{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
+    .products{
+        grid-template-columns:1fr;
     }
 
-    .poster{
-        height:240px;
-    }
-}
-
-@media(max-width:400px){
-    .movies{
-        grid-template-columns:repeat(2,1fr);
+    .product-image{
+        height:420px;
     }
 
-    .poster{
-        height:210px;
+    .section-title{
+        display:block;
     }
+
+    .section-title p{
+        margin-top:8px;
+    }
+
+    .about h2,
+    .order h2{
+        font-size:38px;
+    }
+
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="nav">
-
-        <div class="logo">
-            Cine<span>Vortix</span>
-        </div>
-
-        <input
-            type="text"
-            id="search"
-            class="search"
-            placeholder=" Procurar filme..."
-        >
-
+    <!-- BANNER DE PROMOÇÃO -->
+<div id="promoBanner" class="promo-banner">
+    <div>
+        <strong id="promoTitulo">🔥 PROMOÇÃO NOX47</strong>
+        <span id="promoTexto">Camisetas por apenas R$ 40</span>
     </div>
-</header>
 
-<section class="hero">
+    <button onclick="fecharPromo()">×</button>
+</div>
+    
+<header>
 
-    <h1>Seu cinema na palma da mão.</h1>
+<div class="nav">
 
-    <p>
-        Explore filmes, encontre seus favoritos e assista
-        diretamente pelo seu navegador.
-    </p>
+<div class="logo">
+NOX<span>47</span> STREET
+</div>
 
-    <button onclick="mostrarCatalogo()">
-        Explorar filmes
-    </button>
-
-</section>
-
-<div class="filters">
-
-    <button class="filter active" onclick="filtrar('Todos',this)">
-        Todos
-    </button>
-
-    <button class="filter" onclick="filtrar('Ação',this)">
-        Ação
-    </button>
-
-    <button class="filter" onclick="filtrar('Suspense',this)">
-        Suspense
-    </button>
-
-    <button class="filter" onclick="filtrar('Animação',this)">
-        Animação
-    </button>
-
-    <button class="filter" onclick="filtrar('Games',this)">
-        Games
-    </button>
-
-    <button class="filter" onclick="filtrar('Drama',this)">
-        Drama
-    </button>
+<nav>
+<a href="#produtos">Camisetas</a>
+<a href="#sobre">A marca</a>
+<a href="#pedido">Pedido</a>
+</nav>
 
 </div>
 
-<main class="container">
+</header>
 
-    <h2 class="title">Filmes</h2>
 
-    <div id="movies" class="movies"></div>
+<!-- HERO -->
 
-    <div id="empty" class="empty">
-        Nenhum filme encontrado.
-    </div>
+<main>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="tag">
+CAPÃO REDONDO • SP
+</div>
+
+<h1 id="logo3d">
+NOX<span>47</span>
+</h1>
+
+<p>
+Streetwear feito para quem não precisa seguir o padrão.
+Camisetas oversized, visual urbano e presença.
+</p>
+
+<div class="buttons">
+
+<a href="#produtos" class="btn btn-primary">
+VER CAMISETAS
+</a>
+
+<a href="#pedido" class="btn btn-secondary">
+FAZER PEDIDO
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PRODUTOS -->
+
+<section id="produtos">
+
+<div class="section-title">
+
+<div>
+<h2>DROP 01</h2>
+<p>Modelos disponíveis para encomenda</p>
+</div>
+
+<p>R$ 50,00 • TAMANHO G</p>
+
+</div>
+
+
+<div class="products">
+
+
+<!-- PRODUTO 1 -->
+
+<div class="product">
+
+<div class="product-image">
+
+<img src="bulls.jpg">
+
+</div>
+
+<div class="product-info">
+
+<h3>Regata Bulls</h3>
+
+<p>
+Minimalista • Oversized • Streetwear
+</p>
+
+<div class="price">
+R$ 50,00
+</div>
+
+<button class="buy"
+onclick="abrirPedido('NOX BULLS')">
+PEDIR NO WHATSAPP
+</button>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- SOBRE -->
+
+<div class="about">
+
+<section id="sobre">
+
+<div class="about-content">
+
+<div>
+
+<h2>
+NÃO É SÓ<br>
+UMA <span>CAMISETA.</span>
+</h2>
+
+<p>
+A NOX47 nasceu para representar quem tem personalidade
+e prefere criar o próprio estilo.
+Uma estética urbana, simples e marcante.
+</p>
+
+<p>
+📍 Capão Redondo — São Paulo
+</p>
+
+</div>
+
+
+<div class="info-box">
+
+<div class="info">
+
+<strong>R$50</strong>
+
+<small>
+Preço único
+</small>
+
+</div>
+
+<div class="info">
+
+<strong>G</strong>
+
+<small>
+Tamanho disponível
+</small>
+
+</div>
+
+<div class="info">
+
+<strong>3 dias</strong>
+
+<small>
+Prazo de encomenda
+</small>
+
+</div>
+
+<div class="info">
+
+<strong>SP</strong>
+
+<small>
+Capão Redondo
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- PEDIDO -->
+
+<section class="order" id="pedido">
+
+<h2>
+QUER A SUA?
+</h2>
+
+<p>
+Escolha o modelo e fale diretamente pelo WhatsApp.
+</p>
+
+<button class="btn btn-primary"
+onclick="abrirPedido('')">
+
+FAZER ORÇAMENTO
+
+</button>
+
+</section>
 
 </main>
 
+
 <footer>
-    © 2026 CineVortix Direitos Reservados
+
+NOX47 STREET © 2026<br><br>
+CAPÃO REDONDO • SÃO PAULO
+
 </footer>
 
 
-<!-- MODAL DO PLAYER -->
+<!-- MODAL -->
 
-<div id="modal" class="modal">
+<div class="modal" id="modal">
 
-    <div class="modal-content">
+<div class="modal-box">
 
-        <button class="close" onclick="fecharPlayer()">×</button>
+<button class="close" onclick="fecharPedido()">×</button>
 
-        <div class="video-container">
+<h2>Fazer pedido</h2>
 
-            <video
-                id="player"
-                controls
-                playsinline
-            ></video>
+<p class="subtitle">
+Preencha os dados e o WhatsApp será aberto.
+</p>
 
-        </div>
 
-        <div class="modal-info">
+<label>
+Modelo
+</label>
 
-            <h2 id="modalTitle">Filme</h2>
+<input
+type="text"
+id="modelo"
+placeholder="Nome da camiseta"
+>
 
-            <p id="modalDescription">
-                Descrição do filme.
-            </p>
 
-            <br>
+<label>
+Tamanho
+</label>
 
-            <button onclick="telaCheia()"
-            style="
-            background:#ff3158;
-            color:white;
-            border:0;
-            padding:11px 18px;
-            border-radius:7px;
-            cursor:pointer;">
-                ⛶ Tela cheia
-            </button>
+<input
+type="text"
+value="GG"
+readonly
+>
 
-        </div>
 
-    </div>
+<label>
+Seu nome
+</label>
+
+<input
+type="text"
+id="nome"
+placeholder="Digite seu nome"
+>
+
+
+<label>
+Quantidade
+</label>
+
+<input
+type="number"
+id="quantidade"
+value="1"
+min="1"
+max="10"
+>
+
+
+<button
+class="btn btn-primary"
+style="width:100%;"
+onclick="enviarWhatsApp()">
+
+ENVIAR PEDIDO
+
+</button>
+
+</div>
 
 </div>
 
 
 <script>
+/* ==========================================
+   SISTEMA DE PROMOÇÃO
+   ========================================== */
 
 /*
-====================================
- ADICIONE SEUS FILMES AQUI
-====================================
+   MUDE SOMENTE ESTA PARTE
 */
 
-const filmes = [
+const PROMOCAO = {
 
-{
-    titulo:"Homem Aranha:Um novo dia",
-    genero:"Ação",
-    ano:"2026",
-    poster:"homemaranhaumnovodia.jpg",
-    video:"homemaranhaumnovodia.mp4",
-    descricao:"Peter Parker enfrenta uma nova ameaça enquanto tenta equilibrar sua vida pessoal e sua missão como Homem-Aranha."
-},
+    ativa: true,
 
-{
-    titulo:"obsessão",
-    genero:"Suspense",
-    ano:"2024",
-    poster:"obsessão.jpg",
-    video:"obsessão.mp4",
-    descricao:"Uma pessoa se envolve em uma relação cada vez mais intensa e perigosa, onde nada é o que parece."
-},
+    titulo: "🔥 PROMOÇÃO NOX47",
 
-{
-    titulo:"Toy story 5",
-    genero:"Animação",
-    ano:"2026",
-    poster:"toystory5.jpg",
-    video:"toystory5.mp4",
-    descricao:"Woody, Buzz e seus amigos enfrentam uma nova aventura em um mundo onde a tecnologia ameaça o espaço dos brinquedos."
-},
+    texto: "Camisetas por apenas R$ 50,00",
 
-    {
-    titulo:"GTA 6",
-    genero:"Games",
-    ano:"2026",
-    poster:"gta6.jpg",
-    video:"gta6.mp4",
-    descricao:""
-},
-    
-    {
-    titulo:"Michael Jackson: Filme",
-    genero:"",
-    ano:"",
-    poster:"michaeljackson.jpg",
-    video:".mp4",
-    descricao:""
-},
-    
-{
-    titulo:"Coringa",
-    genero:"Drama",
-    ano:"2019",
-    poster:"coringa.jpg",
-    video:"coringa.mp4",
-    descricao:"Arthur Fleck mergulha em uma transformação sombria que o leva a se tornar o lendário Coringa."
-},
-   
-    
-    {
-    titulo:"Os Simpsons Filme",
-    genero:"",
-    ano:"",
-    poster:"ossimpsons.jpg",
-    video:"ossimpsons.mp4",
-    descricao:""
-},
-    
-    
-    {
-    titulo:"Gato de Botas 2",
-    genero:"Animação",
-    ano:"2019",
-    poster:"gatodebotasdois.jpg",
-    video:"gatodebotas2.mp4",
-    descricao:""
-},
-    
-    
-    {
-    titulo:"Um Cabra bom de bola",
-    genero:"Animação",
-    ano:"2026",
-    poster:"umcabrabomdebola.jpg",
-    video:"umcabrabomdebola.mp4",
-    descricao:""
-},
-    
-{
-    titulo:"Irmão Urso",
-    genero:"Animação",
-    ano:"2003",
-    poster:"irmãourso.jpg",
-    video:"irmãourso.mp4",
-    descricao:"Um jovem transformado em urso aprende sobre responsabilidade, família e amor durante sua jornada."
-},
+    preco: 50,
 
-{
-    titulo:"Homem Aranha no Aranhaverso",
-    genero:"Animação",
-    ano:"2018",
-    poster:"homemaranhanoaranhaverso.jpg",
-    video:"homemaranhanoaranhaverso.mp4",
-    descricao:"Miles Morales descobre um universo de diferentes Homens-Aranha e precisa aprender a assumir seu próprio destino."
-}
+    validade: "Enquanto durar o estoque"
 
-];
-
-let categoriaAtual = "Todos";
+};
 
 
-/* RENDERIZAR FILMES */
+/* ==========================================
+   MOSTRAR PROMOÇÃO
+   ========================================== */
 
-function renderizar(){
+const promoBanner =
+    document.getElementById("promoBanner");
 
-    const area = document.getElementById("movies");
+const promoTitulo =
+    document.getElementById("promoTitulo");
 
-    const busca =
-        document.getElementById("search").value.toLowerCase();
-
-    area.innerHTML = "";
-
-    const resultado = filmes.filter(filme => {
-
-        const categoria =
-            categoriaAtual === "Todos" ||
-            filme.genero === categoriaAtual;
-
-        const pesquisa =
-            filme.titulo.toLowerCase().includes(busca);
-
-        return categoria && pesquisa;
-
-    });
-
-    document.getElementById("empty").style.display =
-        resultado.length ? "none" : "block";
+const promoTexto =
+    document.getElementById("promoTexto");
 
 
-    resultado.forEach((filme,index)=>{
+if(PROMOCAO.ativa){
 
-        const card = document.createElement("div");
+    promoTitulo.textContent =
+        PROMOCAO.titulo;
 
-        card.className = "card";
+    promoTexto.textContent =
+        PROMOCAO.texto +
+        " • " +
+        PROMOCAO.validade;
 
-        card.innerHTML = `
-
-            <img
-                class="poster"
-                src="${filme.poster}"
-                alt="${filme.titulo}"
-            >
-
-            <div class="info">
-
-                <h3>${filme.titulo}</h3>
-
-                <p>
-                    ${filme.genero} • ${filme.ano}
-                </p>
-
-                <div class="actions">
-
-                    <button
-                        class="watch"
-                        onclick="abrirPlayer(${index})">
-                        ▶ Assistir
-                    </button>
-
-                    <button
-                        class="favorite"
-                        onclick="favoritar(this)">
-                        ♡
-                    </button>
-
-                </div>
-
-            </div>
-        `;
-
-        area.appendChild(card);
-
-    });
-
-}
-
-
-/* PESQUISA */
-
-document
-.getElementById("search")
-.addEventListener("input",renderizar);
-
-
-/* FILTRO */
-
-function filtrar(categoria,botao){
-
-    categoriaAtual = categoria;
-
-    document
-    .querySelectorAll(".filter")
-    .forEach(b => b.classList.remove("active"));
-
-    botao.classList.add("active");
-
-    renderizar();
-
-}
-
-
-/* PLAYER */
-
-function abrirPlayer(index){
-
-    const filme = filmes[index];
-
-    document.getElementById("modalTitle").textContent =
-        filme.titulo;
-
-    document.getElementById("modalDescription").textContent =
-        filme.descricao;
-
-    const player =
-        document.getElementById("player");
-
-    player.src = filme.video;
-
-    document.getElementById("modal").style.display =
+    promoBanner.style.display =
         "flex";
 
-    player.play().catch(()=>{});
-
 }
 
 
-function fecharPlayer(){
+/* ==========================================
+   FECHAR PROMOÇÃO
+   ========================================== */
 
-    const player =
-        document.getElementById("player");
+function fecharPromo(){
 
-    player.pause();
-
-    player.src = "";
-
-    document.getElementById("modal").style.display =
+    promoBanner.style.display =
         "none";
 
 }
+/* ==========================================
+   CONFIGURAÇÃO DO WHATSAPP
+   ========================================== */
+
+/*
+   COLOQUE SEU NÚMERO AQUI.
+
+   Exemplo:
+   5511999999999
+
+   Não coloque:
+   +
+   espaços
+   parênteses
+   hífen
+*/
+
+const WHATSAPP = "5581995752861";
 
 
-/* TELA CHEIA */
+/* ==========================================
+   LOGO 3D
+   ========================================== */
 
-function telaCheia(){
+const logo = document.getElementById("logo3d");
 
-    const video =
-        document.getElementById("player");
+document.addEventListener("mousemove", function(e){
 
-    if(video.requestFullscreen){
+    const x = (window.innerWidth / 2 - e.clientX) / 30;
 
-        video.requestFullscreen();
+    const y = (window.innerHeight / 2 - e.clientY) / 30;
 
-    }else if(video.webkitRequestFullscreen){
+    logo.style.transform =
+        `rotateY(${x}deg) rotateX(${-y}deg)`;
 
-        video.webkitRequestFullscreen();
+});
 
-    }else if(video.webkitEnterFullscreen){
 
-        video.webkitEnterFullscreen();
+/* Movimento no celular */
 
-    }
+document.addEventListener("touchmove", function(e){
+
+    if(!e.touches[0]) return;
+
+    const x = (window.innerWidth / 2 - e.touches[0].clientX) / 35;
+
+    const y = (window.innerHeight / 2 - e.touches[0].clientY) / 35;
+
+    logo.style.transform =
+        `rotateY(${x}deg) rotateX(${-y}deg)`;
+
+});
+
+
+/* ==========================================
+   MODAL
+   ========================================== */
+
+const modal = document.getElementById("modal");
+
+function abrirPedido(produto){
+
+    document.getElementById("modelo").value = produto;
+
+    modal.classList.add("active");
+
+}
+
+function fecharPedido(){
+
+    modal.classList.remove("active");
 
 }
 
 
-/* FAVORITOS */
+/* Fechar clicando fora */
 
-function favoritar(botao){
+modal.addEventListener("click", function(e){
 
-    botao.classList.toggle("active");
+    if(e.target === modal){
 
-    botao.textContent =
-        botao.classList.contains("active")
-        ? "♥"
-        : "♡";
-
-}
-
-
-/* BOTÃO HERO */
-
-function mostrarCatalogo(){
-
-    document
-    .getElementById("movies")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
-
-}
-
-
-/* ESC PARA FECHAR */
-
-document.addEventListener("keydown",function(e){
-
-    if(e.key === "Escape"){
-
-        fecharPlayer();
+        fecharPedido();
 
     }
 
 });
 
 
-/* INICIAR */
+/* ==========================================
+   WHATSAPP
+   ========================================== */
 
-renderizar();
+function enviarWhatsApp(){
+
+    const modelo =
+        document.getElementById("modelo").value.trim();
+
+    const nome =
+        document.getElementById("nome").value.trim();
+
+    const quantidade =
+        document.getElementById("quantidade").value;
+
+
+    if(modelo === ""){
+
+        alert("Digite o nome da camiseta.");
+
+        return;
+
+    }
+
+    if(nome === ""){
+
+        alert("Digite seu nome.");
+
+        return;
+
+    }
+
+
+    const total =
+        Number(quantidade) * 50;
+
+
+    const mensagem =
+
+`🔥 *NOVO PEDIDO — NOX47 STREET*
+
+👕 Modelo: ${modelo}
+
+📏 Tamanho: GG
+
+🔢 Quantidade: ${quantidade}
+
+💰 Total: R$ ${total},00
+
+👤 Nome: ${nome}
+
+📍 Região: Capão Redondo — SP
+
+⏱️ Prazo informado: até 3 dias
+
+Quero fazer meu pedido!`;
+
+
+    const url =
+        "https://wa.me/5581995752861" +
+        WHATSAPP +
+        "?text=" +
+        encodeURIComponent(mensagem);
+
+
+    window.open(url, "_blank");
+
+    
+}
 
 </script>
 
